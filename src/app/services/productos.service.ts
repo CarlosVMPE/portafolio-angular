@@ -13,34 +13,30 @@ export class ProductosService {
   constructor(private http: HttpClient) {
     this.cargarProductos();
   }
-/*
-  private cargarProductos() {
-    return new Promise((resolve, reject) => {
-      this.http
-        .get("https://angular-html-f6e65.firebaseio.com/productos_idx.json")
-        .subscribe((resp: Producto[]) => {
-          //console.log(resp);
-
-          this.productos = resp;
-          this.cargando = false;
-          resolve();
-        });
-    });
-  }*/
 
   private cargarProductos() {
     return new Promise((resolve, reject) => {
       this.http
         .get("https://angular-html-f6e65.firebaseio.com/productos_idx.json")
         .subscribe((resp: Producto[]) => {
-          //console.log(resp);
-
           this.productos = resp;
           this.cargando = false;
           resolve();
         });
     });
   }
+/*
+    private async cargarProductos() {
+    await this.http
+      .get("https://angular-html-f6e65.firebaseio.com/productos_idx.json")
+      .subscribe((resp: Producto[]) => {
+        this.productos = resp;
+        setTimeout(() => {
+          this.cargando = false;
+        }, 800);
+        //resolve();
+      });
+  }*/
 
   getProducto(id: string) {
     return this.http.get(
@@ -69,7 +65,7 @@ export class ProductosService {
 
     this.productosFiltrado = [];
 
-    termino = termino.toLocaleLowerCase();
+    termino = termino.toLowerCase();
 
     this.productos.forEach( prod => {
       const tituloLower = prod.titulo.toLowerCase();
